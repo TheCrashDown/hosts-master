@@ -20,7 +20,7 @@ class HostsFileHelper:
         return line and not line.startswith("#")
 
     @staticmethod
-    def read_hosts(path: str) -> list[str]:
+    def read(path: str) -> list[str]:
         """
         Read hosts-format file from provided path
 
@@ -48,7 +48,7 @@ class HostsFileHelper:
         return lines
 
     @staticmethod
-    def write_hosts(path: str, lines: list[str]) -> None:
+    def write(path: str, lines: list[str]) -> None:
         """
         Write hosts-format file to provided path
 

@@ -5,34 +5,42 @@ from src.backend.file import HostsFileHelper as HostsFileHelper
 from src.backend.os_master import OSMaster as OSMaster
 
 
-class HostsManager:
-    os_master: OSMaster
+class HostsManagerState:
     file_content: list[str]
+    backup_paths: list[str]
 
     def __init__(self) -> None:
-        self.os_master = OSMaster()
+        self.file_content = []
+        self.backup_paths = [OSMaster.user_folder, OSMaster.hosts_folder]
+
+
+class HostsManager:
+    state: HostsManagerState
+
+    def __init__(self) -> None:
+        self.state = HostsManagerState(OSMaster)
 
     def get_hosts(self) -> None:
         try:
-            self.file_content = HostsFileHelper.read_hosts(self.os_master.hosts_path)
+            self.state.file_content = HostsFileHelper.read(OSMaster.hosts_path)
         except Exception:
             # TODO: handle error
             raise
 
     def set_hosts(self) -> None:
         try:
-            HostsFileHelper.write_hosts(self.os_master.hosts_path, self.file_content)
+            HostsFileHelper.write(OSMaster.hosts_path, self.state.file_content)
         except Exception:
             # TODO: handle error
             raise
 
     def get_backup_name(self) -> str:
         name = f"hosts_{int(datetime.now().timestamp())}.bak"
-        return os.path.join(self.os_master.backup_folder, name)
+        return os.path.join(OSMaster.hosts_folder, name)
 
     def backup_hosts(self) -> None:
         try:
-            HostsFileHelper.write_hosts(self.get_backup_name(), self.file_content)
+            HostsFileHelper.write(self.get_backup_name(), self.state.file_content)
         except Exception:
             # TODO: handle error
             raise
