@@ -33,7 +33,7 @@ class HostsFileHelper:
 
         if not os.path.exists(path):
             raise FileNotFoundError(
-                f"Can't read hosts file from path '{path}'. " "File does not exist."
+                f"Can't read hosts file from path '{path}'. File does not exist."
             )
 
         if not os.access(path, os.R_OK):
