@@ -7,5 +7,8 @@ class HostsMaster:
     hosts_manager: HostsManager
 
     def __init__(self) -> None:
-        self.gui = GUI()
         self.hosts_manager = HostsManager()
+        self.gui = GUI(hosts_manager=self.hosts_manager)
+
+    def run(self) -> None:
+        self.gui.start()

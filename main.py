@@ -1,4 +1,4 @@
-from src.backend.reader import HostsEditor
+from src import HostsMaster
 
-he = HostsEditor()
-he.read_hosts()
+hosts_master = HostsMaster()
+hosts_master.run()
